@@ -44,6 +44,10 @@ def about():
 def portfolio():
     return render_template('portfolio.html',page = 'Portfolio')
 
+@main.route("/projects")
+def projects():
+    return render_template('projects.html',page = 'Projects')
+
 @main.route("/portfolio-detail")
 def portfolio_detail():
     return render_template('portfolio-details.html',page = 'Portfolio Detail')

@@ -30,24 +30,35 @@ class San_Functions:
         cursor.close()
         return final_arr
 
-    def addPortfolio():
+    def addPortfolio(self,request):
         cursor = conn.cursor()
         colomns = []
- 		values = []
+        values = []
         image = self.upload_file(request)
         if image :
-            query =  query + "image='"+image+"',"
+            colomns.push('image');
+            values.push("'"+image+"'");
         if request.form['name'] :
-            query =  query + "name='"+request.form['name']+"',"
+            colomns.push('name');
+            values.push("'"+request.form['name']+"'");
         if request.form['user_id'] :
-            query =  query + "user_id='"+request.form['user_id']+"',"
+            colomns.push('user_id');
+            values.push("'"+request.form['user_id']+"'");
         if request.form['project_id'] :
-            query =  query + "project_id='"+request.form['project_id']+"',"
+            colomns.push('project_id');
+            values.push("'"+request.form['project_id']+"'");
         if request.form['about'] :
-            query =  query + "about='"+request.form['about']+"',"
+            colomns.push('about');
+            values.push("'"+request.form['about']+"'");
         query = query.rstrip(',')
-        query = query + " WHERE id = "+request.form['edit_id']
-        cursor.execute(query)
+        cols = ",".join(colomns)
+        cols = cols.rstrip(',')
+        vals = ",".join(values)
+        vals = vals.rstrip(',')
+
+        sql = "INSERT INTO Stud ("+cols+") VALUES("+vals+")"
+        print(sql);
+        # cursor.execute(query)
         conn.commit()
         cursor.close()
 
