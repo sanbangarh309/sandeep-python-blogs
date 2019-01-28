@@ -51,19 +51,19 @@
             <p>Profile</p>
           </a>
         </li>
-        <li>
-          <a href="{{url_for('main.chat')}}">
+        <li {% if page == "portfolio" %} class="active" {% endif %}>
+          <a href="{{url_for('main.portfolio_list')}}">
             <i class="pe-7s-note2"></i>
-            <p>Chat</p>
+            <p>Portfolio</p>
+          </a>
+        </li>
+        <li {% if page == "projects" %} class="active" {% endif %}>
+          <a href="{{url_for('main.projects')}}">
+            <i class="pe-7s-news-paper"></i>
+            <p>Projects</p>
           </a>
         </li>
         <!-- <li>
-          <a href="typography.html">
-            <i class="pe-7s-news-paper"></i>
-            <p>Typography</p>
-          </a>
-        </li>
-        <li>
           <a href="icons.html">
             <i class="pe-7s-science"></i>
             <p>Icons</p>

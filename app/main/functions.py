@@ -5,24 +5,56 @@ from werkzeug.utils import secure_filename
 import os
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 mysql = sanDb()
+conn = mysql.connect()
 class San_Functions:
     def __init__(self):
         self.name = 'name'
 
-    def get_user(id):
-        conn = mysql.connect()
+    def get_user(self,id):
         cursor = conn.cursor()
         cursor.execute("SELECT * from users WHERE id = %s",(1))
         columns = [desc[0] for desc in cursor.description]
         for row in cursor:
             fin_row = dict(zip(columns, row))
             return fin_row
+        cursor.close()
 
-    def update_profile(request):
-        conn = mysql.connect()
+    def get_portfolio(self,id):
+        cursor = conn.cursor()
+        final_arr = []
+        cursor.execute("SELECT * from portfolio WHERE user_id = %s",(id))
+        columns = [desc[0] for desc in cursor.description]
+        for row in cursor:
+            fin_row = dict(zip(columns, row))
+            final_arr.push(fin_row)
+        cursor.close()
+        return final_arr
+
+    def addPortfolio():
+        cursor = conn.cursor()
+        colomns = []
+ 		values = []
+        image = self.upload_file(request)
+        if image :
+            query =  query + "image='"+image+"',"
+        if request.form['name'] :
+            query =  query + "name='"+request.form['name']+"',"
+        if request.form['user_id'] :
+            query =  query + "user_id='"+request.form['user_id']+"',"
+        if request.form['project_id'] :
+            query =  query + "project_id='"+request.form['project_id']+"',"
+        if request.form['about'] :
+            query =  query + "about='"+request.form['about']+"',"
+        query = query.rstrip(',')
+        query = query + " WHERE id = "+request.form['edit_id']
+        cursor.execute(query)
+        conn.commit()
+        cursor.close()
+
+    def update_profile(self,request):
         cursor = conn.cursor()
         query = "UPDATE users SET "
-        image = Upload_Functions.upload_file(request)
+        image = self.upload_file(request)
         if image :
             query =  query + "image='"+image+"',"
         if request.form['name'] :
@@ -37,18 +69,16 @@ class San_Functions:
             query =  query + "about='"+request.form['about']+"',"
         query = query.rstrip(',')
         query = query + " WHERE id = "+request.form['edit_id']
-        # query = query.rstrip(',')
-        print(query)
         cursor.execute(query)
+        conn.commit()
+        cursor.close()
         return request.form['edit_id']
-        # return jsonify(query)
-        # cursor.execute("UPDATE users SET name = %s,email = %s,about = %s,address=%s,phone=%s WHERE id = %s",data_array)
 
     def allowed_file(filename):
         return '.' in filename and \
                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-    def upload_file(request):
+    def upload_file(self,request):
         if request.method == 'POST':
             # check if the post request has the file part
             if 'image' not in request.files:

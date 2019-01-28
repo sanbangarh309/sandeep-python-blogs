@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, \
      check_password_hash
 from .db import sanDb
 mysql = sanDb()
+func_ins = San_Functions();
 @main.route('/', methods=['GET', 'POST'])
 def index():
     """Login form to enter a room."""
@@ -67,10 +68,21 @@ def admin():
 @main.route("/admin/profile", methods = ['GET', 'POST'])
 def profile():
     if request.method == 'POST':
-        San_Functions.update_profile(request)
+        func_ins.update_profile(request)
 
-    profile_data = San_Functions.get_user(1)
+    profile_data = func_ins.get_user(1)
     return render_template('admin/profile.html',data = profile_data,page = 'profile')
+
+@main.route("/admin/portfolio_list", methods = ['GET', 'POST'])
+def portfolio_list():
+    if request.method == 'POST':
+        if request.form['edit_id']:
+            func_ins.updatePortfolio(request)
+        else :
+            func_ins.addPortfolio(request)
+
+    profile_data = func_ins.get_portfolio(1)
+    return render_template('admin/portfolio.html',data = profile_data,page = 'portfolio')
 
 @main.route("/admin/login/", methods = ['GET', 'POST'])
 def login():
