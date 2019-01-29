@@ -85,8 +85,21 @@ def portfolio_list():
         else :
             func_ins.addPortfolio(request)
 
-    profile_data = func_ins.get_portfolio(1)
-    return render_template('admin/portfolio.html',data = profile_data,page = 'portfolio')
+    portfolio = func_ins.get_portfolio(1)
+    return render_template('admin/portfolio.html',data = portfolio,page = 'portfolio')
+
+@main.route("/admin/projects_list", methods = ['GET', 'POST'])
+def projects_list():
+    project_detail = ''
+    if request.method == 'POST':
+        if request.form['edit_id']:
+            func_ins.updateProject(request)
+        else :
+            func_ins.addProject(request)
+    if request.args.get('edit_id'):
+        project_detail = func_ins.get_Projects(1,request.args.get('edit_id'))
+    projects = func_ins.get_Projects(1)
+    return render_template('admin/projects.html',data = projects,project_detail = project_detail,page = 'projects')
 
 @main.route("/admin/login/", methods = ['GET', 'POST'])
 def login():
