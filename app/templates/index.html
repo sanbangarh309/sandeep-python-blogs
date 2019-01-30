@@ -8,7 +8,7 @@
         <div class="me wow fadeInDown" data-wow-duration="1s" data-wow-delay="1.2s">It's me</div>
         <h1 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.7s">Sandeep Bangarh</h1>
         <div class="designation mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay="2.1s">
-          Senior Web , Software 
+          Senior Web , Software
           and Full Satck
           <span class="developer">Developer</span>
         </div>
@@ -121,9 +121,9 @@
           <div class="filters">
             <ul>
               <li class="active" data-filter=".all">All Categories</li>
-              <li data-filter=".branding">Branding</li>
-              <li data-filter=".creative">Creative Work</li>
-              <li data-filter=".web-design">Web Design</li>
+              <li data-filter=".branding">PHP</li>
+              <li data-filter=".creative">MEAN</li>
+              <li data-filter=".web-design">MERN</li>
             </ul>
           </div>
         </div>
@@ -131,20 +131,22 @@
 
       <div class="filters-content">
         <div class="row grid">
-          <div class="single-work col-lg-4 col-md-6 col-sm-12 all creative wow fadeInUp" data-wow-duration="2s">
+          {% for project in projects %}
+          <div class="single-work col-lg-4 col-md-6 col-sm-12 all creative wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.{{ loop.index }}s">
             <div class="relative">
               <div class="thumb">
                 <div class="overlay overlay-bg"></div>
-                <img class="image img-fluid" src="/static/img/work/w1.jpg" alt="">
+                <img class="image img-fluid" src="/static/img{{project.image}}" alt="">
               </div>
               <div class="middle">
-                <h4>2D Vinyl Design</h4>
+                <h4>{{project.name}}</h4>
                 <div class="cat">Client Project</div>
               </div>
-              <a class="overlay" href="portfolio-details.html"></a>
+              <a class="overlay" href="{{url_for('main.portfolio_detail')}}"></a>
             </div>
           </div>
-          <div class="single-work col-lg-4 col-md-6 col-sm-12 all web-design branding wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.2s">
+          {% endfor %}
+          <!-- <div class="single-work col-lg-4 col-md-6 col-sm-12 all web-design branding wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.2s">
             <div class="relative">
               <div class="thumb">
                 <div class="overlay overlay-bg"></div>
@@ -208,7 +210,7 @@
               </div>
               <a class="overlay" href="portfolio-details.html"></a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

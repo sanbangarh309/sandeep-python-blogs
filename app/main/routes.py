@@ -18,7 +18,8 @@ def index():
     elif request.method == 'GET':
         form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
-    return render_template('index.html', form=form)
+    projects = func_ins.get_Projects(1)
+    return render_template('index.html', form=form,projects=projects)
 
 @main.route('/enter_room', methods=['GET', 'POST'])
 def enter_room():
@@ -48,7 +49,7 @@ def portfolio():
 def projects():
     return render_template('projects.html',page = 'Projects')
 
-@main.route("/portfolio-detail")
+@main.route("/portfolio_detail")
 def portfolio_detail():
     return render_template('portfolio-details.html',page = 'Portfolio Detail')
 
