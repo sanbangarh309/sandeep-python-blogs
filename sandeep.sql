@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 29, 2019 at 11:57 PM
+-- Generation Time: Jan 30, 2019 at 11:24 PM
 -- Server version: 5.7.24-0ubuntu0.18.04.1
 -- PHP Version: 7.0.30-0ubuntu0.16.04.1
 
@@ -59,7 +59,9 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`id`, `name`, `user_id`, `image`, `about`, `start_date`, `end_date`, `created_at`) VALUES
 (2, 'Arya Natural Farming', 1, '/projects/Firefox_Screenshot_2018-05-15T17-44-26.974Z.png', 'Its my own website to sell organic products. includes all process of selling and booking.', '2017-07-12', '2017-08-24', '2019-01-29 16:52:27'),
-(3, 'Exploring Himachal', 1, '/projects/Firefox_Screenshot_2019-01-07T17-25-07.291Z.png', 'Its is a travel agency, catering to everyone from backpackers to luxury travelers and love to share the beauty and culture of Himalaya with the world.', '2018-02-01', '2018-03-07', '2019-01-29 18:23:00');
+(3, 'Exploring Himachal', 1, '/projects/Firefox_Screenshot_2019-01-07T17-25-07.291Z.png', 'Its is a travel agency, catering to everyone from backpackers to luxury travelers and love to share the beauty and culture of Himalaya with the world.', '2018-02-01', '2018-03-07', '2019-01-29 18:23:00'),
+(4, 'Civil Academy', 1, '/projects/civil.png', 'One stop solution of Affordable courses for Learner’s Driving, Defensive Driving , Fire Fighting\r\nTraining, First Aid, Occupational Health & Safety and Vocational Training programs.', '2018-07-04', '2018-08-15', '2019-01-30 17:24:53'),
+(5, 'Findurguru', 1, '/projects/Firefox_Screenshot_2018-10-17T16-23-30.462Z.png', 'Its a market place to allow customers at a click of a button to source out the best and most cost effective service provider fit for their specific needs seamlessly exceeding their expectations.', '2018-08-23', '2018-10-26', '2019-01-30 17:26:23');
 
 -- --------------------------------------------------------
 
@@ -84,7 +86,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `image`, `about`, `password`, `address`, `phone`, `created_at`) VALUES
-(1, 'Sandeep Bangarh', 'sanbangarh309@gmail.com', NULL, 'hello', 'pbkdf2:sha256:50000$qRSjB5bQ$45e0865655d84e932702151bf5c31b9d0a66ef74c21f34e4cf224b87fb2d5943', 'village mehra , block ladwa , dist kurukshetra', '+919896747812', '2019-01-13 08:08:47');
+(1, 'Sandeep Bangarh', 'sanbangarh309@gmail.com', '/profile/11025231_861471627243487_7326334804074004060_n.jpg', 'I am a full stack developer. I have an experience of web application development with LAMP stack(Linux, Apache, MySQL and PHP) using laravel-framework,slim framework,Django framework,Code-igniter and MERN stack(MongoDB, Express Js, React and Node Js). I also have an experience with other web technologies like AJAX, HTML, CSS, XML, WordPress Plugin Development, Bootstrap, Materialize.', 'pbkdf2:sha256:50000$qRSjB5bQ$45e0865655d84e932702151bf5c31b9d0a66ef74c21f34e4cf224b87fb2d5943', 'village mehra , block ladwa , dist kurukshetra', '+919896747812', '2019-01-13 08:08:47');
 
 --
 -- Indexes for dumped tables
@@ -119,12 +121,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `portfolios`
 --
 ALTER TABLE `portfolios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users`
 --
