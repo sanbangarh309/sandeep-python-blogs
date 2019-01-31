@@ -4,7 +4,7 @@
   <div class="container-fluid">
     <div class="row">
       <form action="{{ url_for('main.projects_list') }}" enctype="multipart/form-data" method="post">
-        <input type="hidden" name="edit_id" value="{{project_detail.id}}">
+        <input type="hidden" name="edit_id" value="{{project_detail._id}}">
         <input type="hidden" name="user_id" value="1">
         <div class="col-md-8">
           <div class="card">
@@ -96,8 +96,8 @@
             <td>{{project.name}}</td>
             <td>{{project.start_date}}</td>
             <td>{{project.end_date}}</td>
-            <td><a href="?edit_id={{project.id}}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-</td>
+            <td><a href="?edit_id={{project._id}}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

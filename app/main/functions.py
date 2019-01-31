@@ -10,6 +10,28 @@ class San_Functions:
     def __init__(self):
         self.name = 'name'
 
+    def login(self,request):
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        results = []
+        query = "SELECT * from users WHERE email = %s"
+        param = (result['email'])
+        cursor.execute(query,param)
+        columns = [desc[0] for desc in cursor.description]
+        print(columns);
+        for row in cursor:
+            fin_row = dict(zip(columns, row))
+            if check_password_hash(fin_row['password'],result['password']):
+                session['userid'] = fin_row['id']
+                session['name'] = fin_row['name']
+                session['email'] = fin_row['email']
+                print('logged in')
+                return redirect(url_for('main.admin'))
+            else:
+                print('wrong email or password')
+                return redirect(url_for('main.login'))
+        cursor.close()
+
     def get_user(self,id):
         cursor = conn.cursor()
         cursor.execute("SELECT * from users WHERE id = %s",(1))

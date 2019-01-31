@@ -2,11 +2,13 @@ from flask import session, redirect, url_for, render_template, request, jsonify
 from . import main
 from .forms import LoginForm
 from .functions import San_Functions
+from .mongofunctions import San_MongoFunctions
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 from .db import sanDb
 mysql = sanDb()
 func_ins = San_Functions();
+mongofunc_ins = San_MongoFunctions();
 @main.route('/', methods=['GET', 'POST'])
 def index():
     """Login form to enter a room."""
@@ -18,7 +20,7 @@ def index():
     elif request.method == 'GET':
         form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
-    projects = func_ins.get_Projects(1)
+    projects = mongofunc_ins.get_Projects(1)
     return render_template('index.html', form=form,projects=projects)
 
 @main.route('/enter_room', methods=['GET', 'POST'])
@@ -40,6 +42,11 @@ def enter_room():
 @main.route("/about")
 def about():
     return render_template('about.html',page = 'About')
+
+
+@main.route("/admin/logout")
+def logout():
+    return render_template('/admin/login.html',page = 'Login')
 
 @main.route("/portfolio")
 def portfolio():
@@ -94,42 +101,25 @@ def projects_list():
     project_detail = ''
     if request.method == 'POST':
         if request.form['edit_id']:
-            func_ins.updateProject(request)
+            mongofunc_ins.updateProject(request)
         else :
-            func_ins.addProject(request)
+            mongofunc_ins.addProject(request)
     if request.args.get('edit_id'):
-        project_detail = func_ins.get_Projects(1,request.args.get('edit_id'))
-    projects = func_ins.get_Projects(1)
+        project_detail = mongofunc_ins.get_Projects(1,request.args.get('edit_id'))
+    projects = mongofunc_ins.get_Projects(1)
     return render_template('admin/projects.html',data = projects,project_detail = project_detail,page = 'projects')
 
 @main.route("/admin/login/", methods = ['GET', 'POST'])
 def login():
     # session['secret_key'] = 'sandeep@bangarh'
     if request.method == 'POST':
-        result = request.form
-        # print(result)
-        # return jsonify(result['email'])
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        results = []
-        query = "SELECT * from users WHERE email = %s"
-        param = (result['email'])
-        cursor.execute(query,param)
-        columns = [desc[0] for desc in cursor.description]
-        print(columns);
-        for row in cursor:
-            fin_row = dict(zip(columns, row))
-            if check_password_hash(fin_row['password'],result['password']):
-                session['userid'] = fin_row['id']
-                session['name'] = fin_row['name']
-                session['email'] = fin_row['email']
-                print('logged in')
-                return redirect(url_for('main.admin'))
-            else:
-                print('wrong email or password')
-                return redirect(url_for('main.login'))
-        cursor.close()
-        return jsonify(result)
+        res = mongofunc_ins.login(request)
+        if res == 1 :
+            print('logged in')
+            return redirect(url_for('main.admin'))
+        else :
+            print('wrong email or password')
+            return redirect(url_for('main.login'))
 
     else:
         # print(generate_password_hash('bangarh309@#'))
